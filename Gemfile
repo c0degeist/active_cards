@@ -28,6 +28,7 @@ gem "haml-rails", "~> 2.0"
 
 group :development, :test do
   gem "html2haml"
+  gem "rspec-rails", "~> 7.0.0"
 
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -47,6 +48,8 @@ end
 
 
 group :test do
+  gem "shoulda-matchers", "~> 6.0"
+
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
