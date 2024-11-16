@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Explanation:
+  = @active_card.explanation
+%p
+  %b Answer:
+  = @active_card.answer
+%p
+  %b Question:
+  = @active_card.question
+%p
+  %b Level:
+  = @active_card.level
+%p
+  %b Last recal:
+  = @active_card.last_recal
+
+= link_to 'Edit', edit_active_card_path(@active_card)
+\|
+= link_to 'Back', active_cards_path

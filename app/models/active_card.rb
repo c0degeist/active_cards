@@ -1,0 +1,2 @@
+class ActiveCard < ApplicationRecord
+end
