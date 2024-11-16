@@ -1,0 +1,11 @@
+%nav.navbar.navbar-expand-lg.bg-body-secondary
+  .container
+    = link_to 'ActiveCards',root_path, class: 'navbar-brand'
+    %button.navbar-toggler(type='button' data-bs-theme='collapse' data-bs-target='#navbarNav' aria-expand='false' aria-label='Toggle navigation')
+      %span.navbar-toggler-icon
+    #navbarNav.collapse.navbar-collapse
+      %ul.navbar-nav
+        %li.nav-item
+          = link_to 'Home', root_path, class: 'nav-link active', 'aria-current': 'page'
+        %li.nav-item
+          = link_to 'Decks', decks_path, class: 'nav-link'

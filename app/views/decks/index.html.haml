@@ -1,0 +1,9 @@
+%p{:style => "color: green"}= notice
+- content_for :title, "Decks"
+%h1 Decks
+#decks
+  - @decks.each do |deck|
+    = render deck
+    %p
+      = link_to "Show this deck", deck
+= link_to "New deck", new_deck_path
