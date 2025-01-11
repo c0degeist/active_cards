@@ -1,14 +1,13 @@
 %p#notice= notice
-
-%p
-  %b Explanation:
-  = @active_card.explanation
-%p
-  %b Answer:
-  = @active_card.answer
-%p
+.mt-5
   %b Question:
-  = @active_card.question
+  = markdown(@active_card.question)
+.mt-5
+  %b Answer:
+  = markdown(@active_card.answer)
+.mt-5
+  %b Explanation:
+  = markdown(@active_card.explanation)
 %p
   %b Level:
   = @active_card.level
