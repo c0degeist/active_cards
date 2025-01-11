@@ -22,7 +22,7 @@
         %td= active_card.last_recal
         %td= link_to 'Show', active_card
         %td= link_to 'Edit', edit_active_card_path(active_card)
-        %td= link_to 'Destroy', active_card, method: :delete, data: { confirm: 'Are you sure?' }
+        %td= link_to 'Destroy', active_card, data: { 'turbo-method': :delete, confirm: 'Are you sure?' }
 
 %br
 
