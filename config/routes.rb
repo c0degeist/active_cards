@@ -13,5 +13,5 @@ Rails.application.routes.draw do
   root "static_pages#home"
 
   resources :decks
-  resources :active_cards
+  resources :active_cards, except: :show
 end

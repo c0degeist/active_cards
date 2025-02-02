@@ -1,36 +1,31 @@
 class ActiveCardsController < ApplicationController
-  before_action :set_active_card, only: %i[ show edit update destroy ]
 
-  # GET /active_cards or /active_cards.json
   def index
-    @active_cards = ActiveCard.all
+    load_active_cards
   end
 
-  # GET /active_cards/1 or /active_cards/1.json
-  def show
-  end
-
-  # GET /active_cards/new
   def new
-    @active_card = ActiveCard.new
+    build_active_card
+
+    if params[:deck_id]
+      @active_card.deck = Deck.find(params[:deck_id])
+    end
   end
 
-  # GET /active_cards/1/edit
   def edit
+    load_active_card
+    build_active_card
   end
 
-  # POST /active_cards or /active_cards.json
   def create
-    @active_card = ActiveCard.new(active_card_params)
+    build_active_card
 
-    respond_to do |format|
-      if @active_card.save
-        format.html { redirect_to @active_card, notice: "Active card was successfully created." }
-        format.json { render :show, status: :created, location: @active_card }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @active_card.errors, status: :unprocessable_entity }
-      end
+    if @active_card.save
+      flash[:success] = "#{@active_card} erfolgreich erstellt"
+      redirect_to @active_card
+    else
+      flash[:error] = "ActiveCard konnte nicht gespeichert werden"
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -49,22 +44,40 @@ class ActiveCardsController < ApplicationController
 
   # DELETE /active_cards/1 or /active_cards/1.json
   def destroy
-    @active_card.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to active_cards_path, status: :see_other, notice: "Active card was successfully destroyed." }
-      format.json { head :no_content }
+    load_active_card
+    if @active_card.destroy
+      flash[:success] = "#{@active_card} wurde gelöscht."
+      redirect_to action: :index
+    else
+      flash[:error] = "#{@active_card} konnte nicht gelöscht werden."
+      render :edit
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_active_card
-      @active_card = ActiveCard.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def active_card_params
-      params.require(:active_card).permit(:explanation, :answer, :question, :level, :last_recal)
-    end
+  def load_active_card
+    @active_card ||= active_card_scope.find(params[:id])
+  end
+
+  def load_active_cards
+    @active_cards = active_card_scope
+      .ordered
+      .to_a
+  end
+
+  def build_active_card
+    @active_card = active_card_scope.new
+    @active_card.attributes = active_card_params
+  end
+
+  def active_card_scope
+    ActiveCard.all
+  end
+
+  def active_card_params
+    params.require(:active_card).permit(:explanation, :answer, :question, :level, :last_recal, :deck_id)
+  rescue ActionController::ParameterMissing
+    {}
+  end
 end

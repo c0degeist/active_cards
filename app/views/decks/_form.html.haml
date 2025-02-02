@@ -1,14 +1,19 @@
-= form_with(model: deck) do |form|
+-# locales: (deck:)
+
+= form_for deck do |f|
   - if deck.errors.any?
-    %div{:style => "color: red"}
-      %h2
-        = pluralize(deck.errors.count, "error")
-        prohibited this deck from being saved:
+    #error_explanation.alert.alert-danger
+      %p= "#{pluralize(deck.errors.count, "error")} prohibited this active_card from being saved:"
       %ul
-        - deck.errors.each do |error|
-          %li= error.full_message
-  %div
-    = form.label :title, style: "display: block"
-    = form.text_field :title
-  %div
-    = form.submit
+        - deck.errors.full_messages.each do |message|
+          %li= message
+
+  %form
+    .mb-3
+      = f.label :title, class: 'form-label'
+      = f.text_field :title, class: 'form-control'
+
+    .row-spacer
+    = f.submit 'Save', class: 'btn btn-primary'
+    = link_to "Add Cards", new_active_card_path(deck_id: deck.id), class: 'btn btn-secondary'
+    = link_to "Back to decks", decks_path, class: 'ms-3'

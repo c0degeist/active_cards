@@ -1,0 +1,27 @@
+-# locals(active_cards:)
+
+%table.table.table-hover
+  %thead
+    %tr
+      %th
+      %th Question
+      %th Answer
+      %th Level
+      %th Last recal
+      %th
+
+  %tbody.table-group-divider
+    - active_cards.each do |active_card|
+      %tr
+        %td
+          = link_to edit_active_card_path(active_card) do
+            %i.bi.bi-pencil-square
+        %td= active_card.question.truncate(70)
+        %td= active_card.answer.truncate(70)
+        %td= active_card.level
+        %td= active_card.last_recal
+        %td
+          = link_to active_card_path(id: active_card.id), data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this card?' }, class: 'text-danger' do
+            %i.bi.bi-trash
+
+%br

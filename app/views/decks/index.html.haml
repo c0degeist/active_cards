@@ -1,9 +1,14 @@
-%p{:style => "color: green"}= notice
 - content_for :title, "Decks"
-%h1 Decks
-#decks
-  - @decks.each do |deck|
-    = render deck
-    %p
-      = link_to "Show this deck", deck
-= link_to "New deck", new_deck_path
+
+.d-flex.align-items-center.justify-content-between
+  %h1 Decks
+  = link_to 'New Deck', new_deck_path, class: 'btn btn-primary'
+
+.row-spacer
+
+- if @decks.present?
+  = render 'table', decks: @decks
+  -# TODO: = pagination_for @decks
+
+- else
+  = no_elements_found

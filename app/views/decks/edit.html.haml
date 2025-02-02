@@ -1,8 +1,12 @@
 - content_for :title, "Editing deck"
-%h1 Editing deck
+
+%h1 Edit Deck "#{@deck}"
+
+.row-spacer
+
 = render "form", deck: @deck
-%br/
-%div
-  = link_to "Show this deck", @deck
-  |
-  \#{link_to "Back to decks", decks_path}
+
+.row-spacer
+
+%p ActiveCards: #{@deck.cards_count}
+= render 'active_cards/table', active_cards: @deck.cards

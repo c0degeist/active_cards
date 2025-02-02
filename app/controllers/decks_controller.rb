@@ -1,53 +1,44 @@
 class DecksController < ApplicationController
-  before_action :set_deck, only: %i[ show edit update destroy ]
-
-  # GET /decks or /decks.json
   def index
     @decks = Deck.all
   end
 
-  # GET /decks/1 or /decks/1.json
   def show
+    redirect_to action: :edit
   end
 
-  # GET /decks/new
   def new
-    @deck = Deck.new
+    build_deck
   end
 
-  # GET /decks/1/edit
   def edit
+    load_deck
   end
 
-  # POST /decks or /decks.json
   def create
-    @deck = Deck.new(deck_params)
+    build_deck
 
-    respond_to do |format|
-      if @deck.save
-        format.html { redirect_to @deck, notice: "Deck was successfully created." }
-        format.json { render :show, status: :created, location: @deck }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @deck.errors, status: :unprocessable_entity }
-      end
+    if @deck.save
+      flash[:success] = "Deck successfully created!"
+      redirect_to @deck
+    else
+      flash[:error] = "Deck could not be created"
+      render "new", status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /decks/1 or /decks/1.json
   def update
-    respond_to do |format|
-      if @deck.update(deck_params)
-        format.html { redirect_to @deck, notice: "Deck was successfully updated." }
-        format.json { render :show, status: :ok, location: @deck }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @deck.errors, status: :unprocessable_entity }
-      end
+    load_deck
+    build_deck
+
+    if @deck.save
+      flash[:success] = "Deck successfully updated!"
+      redirect_to @deck
+    else
+      render "edit", status: :unprocessable_entity
     end
   end
 
-  # DELETE /decks/1 or /decks/1.json
   def destroy
     @deck.destroy!
 
@@ -58,13 +49,29 @@ class DecksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_deck
-      @deck = Deck.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def deck_params
-      params.require(:deck).permit(:name)
-    end
+  def build_deck
+    @deck ||= deck_scope.new
+    @deck.attributes = deck_params
+  end
+
+  def load_decks
+    @decks ||= deck_scope
+      .ordered
+      .to_a
+  end
+
+  def deck_scope
+    Deck.all
+  end
+
+  def load_deck
+    @deck = deck_scope.find(params[:id])
+  end
+
+  def deck_params
+    params.require(:deck).permit(:title)
+  rescue ActionController::ParameterMissing
+    {}
+  end
 end

@@ -12,6 +12,10 @@ const config = {
   })],
   sourcemap: true,
   publicPath: 'assets',
+  loader: {
+    '.woff': 'file',
+    '.woff2': 'file',
+  },
 }
 
 if (watch) {

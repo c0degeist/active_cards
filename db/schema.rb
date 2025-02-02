@@ -17,8 +17,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_16_182857) do
     t.text "question"
     t.integer "level"
     t.datetime "last_recal"
+    t.integer "deck_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deck_id"], name: "index_active_cards_on_deck_id"
   end
 
   create_table "decks", force: :cascade do |t|
@@ -26,4 +28,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_16_182857) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "active_cards", "decks"
 end

@@ -1,29 +1,12 @@
-%h1 Active Cards
+.d-flex.align-items-center.justify-content-between
+  %h1 ActiveCards
+  = link_to 'New ActiveCard', new_active_card_path, class: 'btn btn-primary'
 
-%table
-  %thead
-    %tr
-      %th Explanation
-      %th Answer
-      %th Question
-      %th Level
-      %th Last recal
-      %th
-      %th
-      %th
+.row-spacer
 
-  %tbody
-    - @active_cards.each do |active_card|
-      %tr
-        %td= active_card.explanation
-        %td= active_card.answer
-        %td= active_card.question
-        %td= active_card.level
-        %td= active_card.last_recal
-        %td= link_to 'Show', active_card
-        %td= link_to 'Edit', edit_active_card_path(active_card)
-        %td= link_to 'Destroy', active_card, data: { 'turbo-method': :delete, confirm: 'Are you sure?' }
+- if @active_cards.present?
+  = render 'table', active_cards: @active_cards
+  -# TODO: = pagination_for @active_cards
 
-%br
-
-= link_to 'New Active card', new_active_card_path
+- else
+  = no_elements_found

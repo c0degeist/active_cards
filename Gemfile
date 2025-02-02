@@ -26,6 +26,7 @@ gem "bootsnap", require: false
 gem "haml-rails", "~> 2.0"
 gem "redcarpet"
 gem "rouge"
+gem "has_defaults"
 
 
 group :development, :test do
