@@ -29,16 +29,16 @@ class ActiveCardsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /active_cards/1 or /active_cards/1.json
   def update
-    respond_to do |format|
-      if @active_card.update(active_card_params)
-        format.html { redirect_to @active_card, notice: "Active card was successfully updated." }
-        format.json { render :show, status: :ok, location: @active_card }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @active_card.errors, status: :unprocessable_entity }
-      end
+    load_active_card
+    build_active_card
+
+    if @active_card.save
+      flash[:success] = "#{@active_card} erfolgreich gespeichert."
+      redirect_to @active_card
+    else
+      flash[:error] = "ActiveCard konnte nicht gespeichert werden"
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -67,7 +67,7 @@ class ActiveCardsController < ApplicationController
   end
 
   def build_active_card
-    @active_card = active_card_scope.new
+    @active_card ||= active_card_scope.new
     @active_card.attributes = active_card_params
   end
 

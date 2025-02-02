@@ -13,15 +13,15 @@
 
     .mb-3
       = f.label :question, class: 'form-label'
-      = f.text_area :question, class: 'form-control', rows: 10
+      = f.text_area :question, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor' }
 
     .mb-3
       = f.label :answer, class: 'form-label'
-      = f.text_area :answer, class: 'form-control', rows: 10
+      = f.text_area :answer, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor' }
 
     .mb-3
       = f.label :explanation, class: 'form-label'
-      = f.text_area :explanation, class: 'form-control'
+      = f.text_area :explanation, class: 'form-control', data: { controller: 'milkdown-editor' }
 
     .mt-3
       = f.submit 'Save', class: 'btn btn-primary'

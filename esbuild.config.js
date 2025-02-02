@@ -15,6 +15,7 @@ const config = {
   loader: {
     '.woff': 'file',
     '.woff2': 'file',
+    '.ttf': 'file',
   },
 }
 
