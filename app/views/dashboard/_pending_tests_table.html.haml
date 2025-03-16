@@ -1,0 +1,27 @@
+%table.table.table-hover
+  %thead
+    %tr
+      %th Topic
+      %th Decks
+      %th Cards
+      %th Status
+      %th(width="115px")
+
+  %tbody.table-group-divider
+    - tests.each do |test|
+      %tr
+        %td= test.topic
+        %td= test.decks_count
+        %td= test.pending_cards_count
+        %td
+          - if test.ready?
+            = "Es stehen #{test.pending_cards_count} Cards zur Abfrage bereit"
+          - elsif test.cards_count == 0
+            = "Dieses Deck hat noch keine Cards"
+          - else
+            = "Nächster Test in #{test.days_till_next_test} Tagen"
+        %td
+          - if test.ready?
+            = link_to tests_path(test: { topic_id: test.topic.id }), data: { turbo_method: :post } do
+              .btn.btn-sm.btn-primary
+                Test Starten

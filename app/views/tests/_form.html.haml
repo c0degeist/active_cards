@@ -1,0 +1,23 @@
+-# locales: (test:)
+
+= form_for test do |f|
+  - if test.errors.any?
+    #error_explanation.alert.alert-danger
+      %p= "#{pluralize(test.errors.count, "error")} prohibited this active_card from being saved:"
+      %ul
+        - test.errors.full_messages.each do |message|
+          %li= message
+
+  .form
+    .mb-3
+      = f.label :deck, class: 'form-label'
+      = f.collection_select :deck_id, Deck.ordered, :id, :title, {}, { class: 'form-select' }
+
+    .mb-3
+      = f.label :cards_count, class: 'form-label'
+      = f.number_field :cards_count, class: 'form-control'
+
+    .mt-3
+      = f.submit 'Test starten', class: 'btn btn-primary'
+
+      = link_to 'Back', tests_path, class: 'ms-3'

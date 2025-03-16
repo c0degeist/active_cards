@@ -1,0 +1,13 @@
+%h1= @test
+
+= "Es wurden #{@test.correctly_answered_count} von #{@test.cards_count} Fragen richtig beantwortet (#{@test.score}%)"
+
+.accordion#cards_accordion
+  - @test.cards.each.with_index(1) do |card, index|
+    .accordion-item
+      %h2.accordion-header
+        %button.accordion-button{ "data-bs-toggle": "collapse", "data-bs-target": "#card_#{index}", "aria-expanded": "false",  "aria-controls": "card_#{index}" }
+          Question #{index}
+      .accordion-collapse.collapse{ "data-bs-parent": '#cards_accordion', id: "card_#{index}" }
+        .accordion-body
+          = markdown(card.question)

@@ -1,0 +1,14 @@
+- content_for :title, "Editing topic"
+
+%h1 Edit Topic "#{@topic}"
+
+.row-spacer
+
+= render "form", topic: @topic
+
+.row-spacer
+
+%p Decks: #{@topic.decks_count}
+%p Cards: #{@topic.cards_count}
+
+= render 'decks/table', decks: @topic.decks

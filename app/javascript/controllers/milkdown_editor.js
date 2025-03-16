@@ -7,7 +7,8 @@ import "@milkdown/crepe/theme/frame-dark.css"
 
 export default class extends Controller {
   static values = {
-    defaultValue: String // optional: if you want to set a default value
+    defaultValue: String, // optional: if you want to set a default value
+    readOnly: Boolean
   }
 
   connect() {
@@ -33,6 +34,8 @@ export default class extends Controller {
     this.crepe.create().then(() => {
       console.log("Milkdown editor created")
     })
+
+    this.crepe.setReadonly(this.readOnlyValue)
 
     this.crepe.on(listener => {
       listener.markdownUpdated(newValue => {

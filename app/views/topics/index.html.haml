@@ -1,0 +1,14 @@
+- content_for :title, "Topic"
+
+.d-flex.align-items-center.justify-content-between
+  %h1 Topic
+  = link_to 'New Topic', new_topic_path, class: 'btn btn-primary'
+
+.row-spacer
+
+- if @topics.present?
+  = render 'table', topics: @topics
+  -# TODO: = pagination_for @topics
+
+- else
+  = no_elements_found

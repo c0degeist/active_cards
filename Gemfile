@@ -27,6 +27,7 @@ gem "haml-rails", "~> 2.0"
 gem "redcarpet"
 gem "rouge"
 gem "has_defaults"
+gem "rails_state_machine"
 
 
 group :development, :test do

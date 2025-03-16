@@ -1,0 +1,25 @@
+-# locales: (topics:)
+
+%table.table.table-hover
+  %thead
+    %tr
+      %th(style="width: 120px")
+      %th Title
+      %th Decks
+      %th Cards
+      %th(style="width: 1px")
+
+  %tbody.table-group-divider
+    - topics.each do |topic|
+      %tr
+        %td
+          = link_to new_active_card_path(topic_id: topic.id) do
+            .btn.btn-primary
+              Add Deck
+        %td
+          = link_to topic
+        %td= topic.decks_count
+        %td= topic.cards_count
+        %td
+          = link_to topic_path(topic), data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this topic?' }, class: 'text-danger' do
+            %i.bi.bi-trash

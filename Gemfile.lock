@@ -210,6 +210,8 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
+    rails_state_machine (3.1.0)
+      activerecord
     railties (7.2.2)
       actionpack (= 7.2.2)
       activesupport (= 7.2.2)
@@ -361,6 +363,7 @@ DEPENDENCIES
   jsbundling-rails
   puma (>= 5.0)
   rails (~> 7.2.2)
+  rails_state_machine
   redcarpet
   rouge
   rspec-rails (~> 7.0.0)

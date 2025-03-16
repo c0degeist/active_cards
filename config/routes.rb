@@ -10,8 +10,20 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Defines the root path route ("/")
-  root "static_pages#home"
+  root "dashboard#index"
 
+  resources :topics
   resources :decks
   resources :active_cards, except: :show
+
+  resources :tests do
+    patch :finish, on: :member
+
+    resources :cards, except: :edit, controller: "tests/cards" do
+      member do
+        patch :answer
+        patch :review
+      end
+    end
+  end
 end

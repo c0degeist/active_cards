@@ -70,7 +70,7 @@ class DecksController < ApplicationController
   end
 
   def deck_params
-    params.require(:deck).permit(:title)
+    params.require(:deck).permit(:title, :topic_id)
   rescue ActionController::ParameterMissing
     {}
   end

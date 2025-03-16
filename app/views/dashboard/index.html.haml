@@ -1,0 +1,16 @@
+%h2 Pending Tests
+-# Zeigt Tests an die zur abfrage stehen,
+-# Oder Zeigt die nächsten 3 Tests mit Zeitangabe, ab wann sie zur Abfrage stehen
+-# Zu Klären: Was ist mit Decks, die bereits einen laufenden Test haben, der noch nicht abgeschlossen ist.
+-# Werden die hier angezeigt?
+= render 'pending_tests_table', tests: @pending_tests
+
+.row-spacer
+
+%h2 Started Tests
+= render 'tests/table', tests: @started_tests
+
+.row-spacer
+
+%h2 Last finished tests
+= render 'tests/table', tests: @finished_tests

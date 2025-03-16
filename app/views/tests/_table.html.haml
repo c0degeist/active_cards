@@ -1,0 +1,33 @@
+-# locals(test:)
+-# TODO: Spalte "Progress" Die Anzeigt, wie viele Cards bereits bearbeitet wurden.
+
+%table.table.table-hover
+  %thead
+    %tr
+      %th Topic
+      %th Erstellt am
+      %th Cards
+      %th Status
+      %th(width= 1)
+
+  %tbody.table-group-divider
+    - tests.each do |test|
+      %tr
+        %td= test.topic
+        %td= test.created_at
+        %td= test.cards_count
+        %td= test_state_badge(test.state)
+        %td
+          - if test.started?
+            = link_to test_path(test) do
+              .btn.btn-sm.btn-primary
+                Continue
+          - elsif test.finished?
+            = link_to test_path(test) do
+              .btn.btn-sm.btn-secondary
+                Result
+
+-# TODO: Aufteilung in drei Tabellen
+-# - started tests
+-# - pending tests
+-# - finished tests

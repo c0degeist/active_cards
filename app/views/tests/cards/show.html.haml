@@ -1,0 +1,71 @@
+-# Abhängig vom State der TestCard muss etwas anderes angezeigt werden:
+-# **pending**
+-# - Eingabefeld für UserAnswer
+-# - Button "Lösung anzeigen" -> geht auf die #answer route
+-# ---
+-# **review**
+-# - Zeigt Frage, Lösung & User Eingabe, + Explanation (falls vorhanden)
+-# - Zeigt Zwei Buttons -> "Korrekt" / "False"
+-# ---
+-# **finished**
+-# - Zeigt Frage, Lösung & User Eingabe, + Explanation (falls vorhanden) + Review Wert (Korrekt oder False)
+-# - Zeigt einen Button "Nächste Frage" / "Test Abschließen" je nachdem ob es noch eine Card gibt.
+
+%h1 TestCard
+
+- if @test_card.pending?
+  = form_for @test_card, url: answer_test_card_path do |f|
+    .form
+      .mb-3
+        = f.label :question, class: 'form-label'
+        = f.text_area :question, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor', 'milkdown-editor-read-only-value': true }
+
+      .mb-3
+        = f.label :user_answer, class: 'form-label'
+        = f.text_area :user_answer, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor' }
+
+      .mt-3
+        = f.submit 'Lösung vergleichen', class: 'btn btn-primary'
+
+
+- elsif @test_card.review?
+  = form_for @test_card, url: review_test_card_path do |f|
+    .form
+      .mb-3
+        = f.label :question, class: 'form-label'
+        = f.text_area :question, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor', 'milkdown-editor-read-only-value': true }
+
+      .mb-3
+        = f.label :answer, class: 'form-label'
+        = f.text_area :answer, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor', 'milkdown-editor-read-only-value': true }
+
+      .mb-3
+        = f.label :user_answer, class: 'form-label'
+        = f.text_area :user_answer, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor', 'milkdown-editor-read-only-value': true }
+
+      .mt-3
+        = f.submit 'Korrekt', class: 'btn btn-success', name: "test_card[answered_correctly]", value: 'true'
+        = f.submit 'Falsch', class: 'btn btn-danger', name: "test_card[answered_correctly]", value: 'false'
+
+- elsif @test_card.finished?
+  %h2= @test_card.answered_correctly
+
+  = form_for @test_card, url: review_test_card_path do |f|
+    .form
+      .mb-3
+        = f.label :question, class: 'form-label'
+        = f.text_area :question, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor', 'milkdown-editor-read-only-value': true }
+
+      .mb-3
+        = f.label :answer, class: 'form-label'
+        = f.text_area :answer, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor', 'milkdown-editor-read-only-value': true }
+
+      .mb-3
+        = f.label :user_answer, class: 'form-label'
+        = f.text_area :user_answer, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor', 'milkdown-editor-read-only-value': true }
+
+    - if @test.unfinished_cards.any?
+      = link_to "Next Card", test_card_path(@test, @test.next_card), class: 'btn btn-primary'
+    - else
+      = link_to "Test abschließen", finish_test_path(@test), class: 'btn btn-primary', data: { 'turbo-method': :patch }
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_16_182857) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_08_121319) do
   create_table "active_cards", force: :cascade do |t|
     t.text "explanation"
     t.text "answer"
@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_16_182857) do
     t.integer "deck_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "next_recall"
     t.index ["deck_id"], name: "index_active_cards_on_deck_id"
   end
 
@@ -27,7 +28,40 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_16_182857) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "topic_id"
+  end
+
+  create_table "test_cards", force: :cascade do |t|
+    t.text "explanation"
+    t.text "answer"
+    t.text "user_answer"
+    t.text "question"
+    t.string "state"
+    t.boolean "answered_correctly"
+    t.integer "test_id"
+    t.integer "active_card_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["active_card_id"], name: "index_test_cards_on_active_card_id"
+    t.index ["test_id"], name: "index_test_cards_on_test_id"
+  end
+
+  create_table "tests", force: :cascade do |t|
+    t.string "state"
+    t.datetime "finished_at"
+    t.integer "cards_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "topic_id"
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "active_cards", "decks"
+  add_foreign_key "test_cards", "active_cards"
+  add_foreign_key "test_cards", "tests"
 end
