@@ -19,7 +19,7 @@ class Deck < ApplicationRecord
   end
 
   def next_recall
-    cards.mininum(:next_recall)
+    cards.minimum(:next_recall)
   end
 
   def to_s
