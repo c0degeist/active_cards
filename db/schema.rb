@@ -11,13 +11,16 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2025_03_08_121319) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_cards", force: :cascade do |t|
     t.text "explanation"
     t.text "answer"
     t.text "question"
     t.integer "level"
     t.datetime "last_recal"
-    t.integer "deck_id"
+    t.bigint "deck_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "next_recall"
@@ -38,8 +41,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_08_121319) do
     t.text "question"
     t.string "state"
     t.boolean "answered_correctly"
-    t.integer "test_id"
-    t.integer "active_card_id"
+    t.bigint "test_id"
+    t.bigint "active_card_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["active_card_id"], name: "index_test_cards_on_active_card_id"
