@@ -1,6 +1,7 @@
 class Topic < ApplicationRecord
 
   has_many :decks
+  has_many :cards, through: :decks
 
   validates :title, presence: true
 
@@ -12,6 +13,10 @@ class Topic < ApplicationRecord
 
   def cards_count
     decks.sum(&:cards_count)
+  end
+
+  def pending_cards
+    cards.pending
   end
 
   # TODO: Im Idealfall, sollte #next_recall zurückgeben, wann die nächsten MIN_CARDS_FOR_TEST_COUNT bereit zur abfrage sind.

@@ -70,13 +70,11 @@ class Test < ApplicationRecord
   # end
 
   def create_test_cards
-    topic.decks.each do |deck|
-      random_active_cards = deck.pending_cards.order(Arel.sql("RANDOM()")).limit(MAXIMUM_CARDS_COUNT)
+    random_active_cards = topic.pending_cards.order(Arel.sql("RANDOM()")).limit(MAXIMUM_CARDS_COUNT)
 
-      random_active_cards.each do |active_card|
-        test_card = Test::Card.new(test: self, active_card: active_card)
-        test_card.save!
-      end
+    random_active_cards.each do |active_card|
+      test_card = Test::Card.new(test: self, active_card: active_card)
+      test_card.save!
     end
   end
 
