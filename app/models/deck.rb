@@ -3,13 +3,11 @@ class Deck < ApplicationRecord
   belongs_to :topic
   has_many :cards, class_name: "ActiveCard"
 
-  # TODO: validate uniqenuess
-  validates :title, presence: true, length: { maximum: 30 }
+  validates :title, presence: true, length: { maximum: 30 }, uniqueness: { scope: :topic_id, case_sensitive: false }
   validates :topic, presence: true
 
   scope :ordered, -> { order(title: :asc) }
 
-  # TODO: Spec
   def cards_count
     cards.count
   end
@@ -18,6 +16,8 @@ class Deck < ApplicationRecord
     cards.pending
   end
 
+  # TODO: Was wenn next_recall in der Vergangenheit liegt?
+  # + SPECS
   def next_recall
     cards.minimum(:next_recall)
   end
