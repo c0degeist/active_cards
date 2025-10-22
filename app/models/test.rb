@@ -47,6 +47,10 @@ class Test < ApplicationRecord
     cards.unfinished
   end
 
+  def finished_cards
+    cards.finished
+  end
+
   # TODO: Diesen Wert will man evtl cachen
   def correctly_answered_count
     cards.correct.count

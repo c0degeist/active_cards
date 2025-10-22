@@ -85,10 +85,9 @@ RSpec.feature "Dashboard", type: :feature, js: true do
       click_link 'Test Starten'
     end
 
-    # TODO: Der Progress sollte angezeigt werden (z.B. Card 2/10, vlt sogar eine Bootstrap Progress Bar)
     sleep(0.1) # TODO: Schau wie Michael Capybara Lockstep in Wilson umgesetzt hat.
     expect(page)
-      .to have_css('h1', text: 'TestCard')
+      .to have_css('h1', text: 'TestCard (1 / 2)') # TODO: Progess mit Bootstrap Progress Bar anzeigen.
       .and have_md_field('Question', with: 'This is the first question')
       .and have_md_field('User answer', with: '')
       .and have_no_md_field('Answer') # TODO: Das Feld nach "Solution" umbenennen.
@@ -114,7 +113,8 @@ RSpec.feature "Dashboard", type: :feature, js: true do
     sleep(0.1)
 
     expect(page)
-      .to have_md_field('Question', with: 'This is the second question')
+      .to have_css('h1', text: 'TestCard (2 / 2)')
+      .and have_md_field('Question', with: 'This is the second question')
       .and have_md_field('User answer', with: '')
       .and have_no_md_field('Answer')
       .and have_no_md_field('Explanation')

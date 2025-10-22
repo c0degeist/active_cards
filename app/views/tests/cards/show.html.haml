@@ -11,7 +11,7 @@
 -# - Zeigt Frage, Lösung & User Eingabe, + Explanation (falls vorhanden) + Review Wert (Korrekt oder False)
 -# - Zeigt einen Button "Nächste Frage" / "Test Abschließen" je nachdem ob es noch eine Card gibt.
 
-%h1 TestCard
+%h1= "TestCard (#{@test.finished_cards.count + 1} / #{@test.cards_count})"
 
 - if @test_card.pending?
   = form_for @test_card, url: answer_test_card_path do |f|
