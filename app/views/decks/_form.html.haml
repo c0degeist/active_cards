@@ -14,7 +14,10 @@
       = f.text_field :title, class: 'form-control'
 
     .mb-3
-      = f.label :topic, class: 'form-label'
+      -# TODO: Muss ich immer topic_id machen?
+      -# Kann ich nicht auch :topic machen?
+      -# Wie ist das in anderen Projekten bei uns geregelt?
+      = f.label :topic_id, class: 'form-label'
       = f.collection_select :topic_id, Topic.ordered, :id, :title, { include_blank: 'No topic selected' }, { class: 'form-select' }
 
     .row-spacer

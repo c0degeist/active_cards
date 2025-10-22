@@ -1,5 +1,11 @@
 class DashboardController < ApplicationController
 
+  # TODO: Vlt möchte ich hier etwas "Objektigeres" einführen, mit dem ich spreche.
+  # Test::Dashboard
+  # Und in der #Index action machen wir nur noch build_dashboard
+  # dashboard.pending_tests
+  # dashboard.started_tests
+  # dashboard.last_finished_tests
   def index
     build_pending_tests
     load_started_tests

@@ -1,9 +1,9 @@
-%table.table.table-hover
+%table.table.table-hover.pending-tests-table
   %thead
     %tr
       %th Topic
       %th Decks
-      %th Cards
+      %th Cards (gesammt)
       %th Status
       %th(width="115px")
 
@@ -12,8 +12,11 @@
       %tr
         %td= test.topic
         %td= test.decks_count
-        %td= test.pending_cards_count
+        %td= test.topic.cards_count
         %td
+          -# TODO: Das sollte vlt in einem Helper oder sowas leben?
+          -# Es sollte noch den Status geben "Es gibt zu diesem Topic bereits einen Test. Diesen Test entweder Abschließen oder Abbrechen"
+          -# Vlt wäre es sogar besser die Pending Tests und Started Tests Views zu mergen?
           - if test.ready?
             = "Es stehen #{test.pending_cards_count} Cards zur Abfrage bereit"
           - elsif test.cards_count == 0

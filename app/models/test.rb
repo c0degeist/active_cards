@@ -8,6 +8,7 @@ class Test < ApplicationRecord
   include RailsStateMachine::Model
 
   MAXIMUM_CARDS_COUNT = 10
+  RANDOMIZED = true # TODO: Das sollte nicht in dem Model leben. Orientiere dich dafür an der Radfahrausbildung.
 
   belongs_to :topic
   has_many :cards, class_name: "Test::Card", dependent: :destroy
@@ -39,7 +40,7 @@ class Test < ApplicationRecord
 
   # Auch diese Methode sollte vmtl in einem Form Model liegen.
   def next_card
-    cards.unfinished.first
+    cards.unfinished.order(:created_at).first
   end
 
   def unfinished_cards
@@ -52,11 +53,15 @@ class Test < ApplicationRecord
   end
 
   def score
-    ((correctly_answered_count / cards_count.to_f) * 100).round(2)
+    ((correctly_answered_count / cards_count.to_f) * 100).round
   end
 
   def to_s
     "Test vom #{created_at.strftime("%d.%m.%Y")}"
+  end
+
+  def cards_count
+    cards.size
   end
 
   private
@@ -69,10 +74,15 @@ class Test < ApplicationRecord
   #   end
   # end
 
+  # TODO: Spec
   def create_test_cards
-    random_active_cards = topic.pending_cards.order(Arel.sql("RANDOM()")).limit(MAXIMUM_CARDS_COUNT)
+    selected_active_cards = if RANDOMIZED
+       topic.pending_cards.order(Arel.sql("RANDOM()")).limit(MAXIMUM_CARDS_COUNT)
+    else
+      topic.pending_cards.order(:created_at).limit(MAXIMUM_CARDS_COUNT)
+    end
 
-    random_active_cards.each do |active_card|
+    selected_active_cards.each do |active_card|
       test_card = Test::Card.new(test: self, active_card: active_card)
       test_card.save!
     end

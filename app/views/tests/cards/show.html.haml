@@ -16,13 +16,13 @@
 - if @test_card.pending?
   = form_for @test_card, url: answer_test_card_path do |f|
     .form
-      .mb-3
+      .mb-3{ data: { controller: 'milkdown-editor' } }
         = f.label :question, class: 'form-label'
-        = f.text_area :question, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor', 'milkdown-editor-read-only-value': true }
+        = f.text_area :question, class: 'form-control', rows: 10, data: { milkdown_editor_target: 'textField', 'milkdown-editor-read-only-value': true }
 
-      .mb-3
+      .mb-3{ data: { controller: 'milkdown-editor' } }
         = f.label :user_answer, class: 'form-label'
-        = f.text_area :user_answer, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor' }
+        = f.text_area :user_answer, class: 'form-control', rows: 10, data: { milkdown_editor_target: 'textField' }
 
       .mt-3
         = f.submit 'Lösung vergleichen', class: 'btn btn-primary'
@@ -31,17 +31,21 @@
 - elsif @test_card.review?
   = form_for @test_card, url: review_test_card_path do |f|
     .form
-      .mb-3
+      .mb-3{ data: { controller: 'milkdown-editor' } }
         = f.label :question, class: 'form-label'
-        = f.text_area :question, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor', 'milkdown-editor-read-only-value': true }
+        = f.text_area :question, class: 'form-control', rows: 10, data: { milkdown_editor_target: 'textField', 'milkdown-editor-read-only-value': true }
 
-      .mb-3
+      .mb-3{ data: { controller: 'milkdown-editor' } }
         = f.label :answer, class: 'form-label'
-        = f.text_area :answer, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor', 'milkdown-editor-read-only-value': true }
+        = f.text_area :answer, class: 'form-control', rows: 10, data: { milkdown_editor_target: 'textField', 'milkdown-editor-read-only-value': true }
 
-      .mb-3
+      .mb-3{ data: { controller: 'milkdown-editor' } }
         = f.label :user_answer, class: 'form-label'
-        = f.text_area :user_answer, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor', 'milkdown-editor-read-only-value': true }
+        = f.text_area :user_answer, class: 'form-control', rows: 10, data: { milkdown_editor_target: 'textField', 'milkdown-editor-read-only-value': true }
+
+      .mb-3{ data: { controller: 'milkdown-editor' } }
+        = f.label :explanation, class: 'form-label'
+        = f.text_area :explanation, class: 'form-control', rows: 10, data: { milkdown_editor_target: 'textField', 'milkdown-editor-read-only-value': true }
 
       .mt-3
         = f.submit 'Korrekt', class: 'btn btn-success', name: "test_card[answered_correctly]", value: 'true'
@@ -52,17 +56,21 @@
 
   = form_for @test_card, url: review_test_card_path do |f|
     .form
-      .mb-3
+      .mb-3{ data: { controller: 'milkdown-editor' } }
         = f.label :question, class: 'form-label'
-        = f.text_area :question, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor', 'milkdown-editor-read-only-value': true }
+        = f.text_area :question, class: 'form-control', rows: 10, data: { milkdown_editor_target: 'textField', 'milkdown-editor-read-only-value': true }
 
-      .mb-3
+      .mb-3{ data: { controller: 'milkdown-editor' } }
         = f.label :answer, class: 'form-label'
-        = f.text_area :answer, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor', 'milkdown-editor-read-only-value': true }
+        = f.text_area :answer, class: 'form-control', rows: 10, data: { milkdown_editor_target: 'textField', 'milkdown-editor-read-only-value': true }
 
-      .mb-3
+      .mb-3{ data: { controller: 'milkdown-editor' } }
         = f.label :user_answer, class: 'form-label'
-        = f.text_area :user_answer, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor', 'milkdown-editor-read-only-value': true }
+        = f.text_area :user_answer, class: 'form-control', rows: 10, data: { milkdown_editor_target: 'textField', 'milkdown-editor-read-only-value': true }
+
+      .mb-3{ data: { controller: 'milkdown-editor' } }
+        = f.label :explanation, class: 'form-label'
+        = f.text_area :explanation, class: 'form-control', rows: 10, data: { milkdown_editor_target: 'textField', 'milkdown-editor-read-only-value': true }
 
     - if @test.unfinished_cards.any?
       = link_to "Next Card", test_card_path(@test, @test.next_card), class: 'btn btn-primary'

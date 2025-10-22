@@ -8,20 +8,20 @@
 
   .form
     .mb-3
-      = f.label :deck, class: 'form-label'
+      = f.label :deck_id, class: 'form-label'
       = f.collection_select :deck_id, Deck.ordered, :id, :title, {}, { class: 'form-select' }
 
-    .mb-3
+    .mb-3{ data: { controller: 'milkdown-editor' } }
       = f.label :question, class: 'form-label'
-      = f.text_area :question, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor' }
+      = f.text_area :question, class: 'form-control', rows: 10, data: { milkdown_editor_target: 'textField' }
 
-    .mb-3
+    .mb-3{ data: { controller: 'milkdown-editor' } }
       = f.label :answer, class: 'form-label'
-      = f.text_area :answer, class: 'form-control', rows: 10, data: { controller: 'milkdown-editor' }
+      = f.text_area :answer, class: 'form-control', rows: 10, data: { milkdown_editor_target: 'textField' }
 
-    .mb-3
+    .mb-3{ data: { controller: 'milkdown-editor' } }
       = f.label :explanation, class: 'form-label'
-      = f.text_area :explanation, class: 'form-control', data: { controller: 'milkdown-editor' }
+      = f.text_area :explanation, class: 'form-control', data: { milkdown_editor_target: 'textField' }
 
     .mt-3
       = f.submit 'Save', class: 'btn btn-primary'

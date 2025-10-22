@@ -1,7 +1,13 @@
 class Test
   class PendingTest
 
-    MIN_CARDS_COUNT_FOR_TEST = 10
+    # TODO: Brauche ich den MIN_CARDS_COUNT_FOR_TEST?
+    # Falls ja, sollte ich im Dashboard vermutlich besseres Feedback in der UI geben.
+    # Sowas wie: "Es stehen 3 cards zur Abfrage bereit. Weitere 7 Fehlen"
+    # Allgemein sollte das Feedback verbessert werden. z.B. Wass wen das Deck überhaupt weniger Cards hat als MIN_CARDS_COUNT_FOR_TEST
+    # -> "Dieses Topic hat noch nicht genug Cards für einen Test. Mindestens X Cards werden benötigt"
+    # Außedem sollte diese Konstante vermutlich nicht in dieser Klasse leben?
+    MIN_CARDS_COUNT_FOR_TEST = 1
 
     attr_reader :topic
 

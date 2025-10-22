@@ -1,4 +1,5 @@
 class TopicsController < ApplicationController
+
   def index
     @topics = Topic.all
   end
@@ -40,12 +41,10 @@ class TopicsController < ApplicationController
   end
 
   def destroy
+    load_topic
     @topic.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to topics_path, status: :see_other, notice: "Topic was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    flash[:success] = "Topic successfully deleted!"
+    redirect_to topics_path, status: :see_other
   end
 
   private

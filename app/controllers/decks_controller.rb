@@ -1,6 +1,6 @@
 class DecksController < ApplicationController
   def index
-    @decks = Deck.all
+    load_decks
   end
 
   def show
@@ -22,6 +22,7 @@ class DecksController < ApplicationController
       flash[:success] = "Deck successfully created!"
       redirect_to @deck
     else
+      # TODO: styling für error flashes festlegen.
       flash[:error] = "Deck could not be created"
       render "new", status: :unprocessable_entity
     end
@@ -40,12 +41,10 @@ class DecksController < ApplicationController
   end
 
   def destroy
+    load_deck
     @deck.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to decks_path, status: :see_other, notice: "Deck was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    flash[:success] = "Deck was successfully destroyed."
+    redirect_to decks_path, status: :see_other
   end
 
   private

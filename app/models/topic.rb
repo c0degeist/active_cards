@@ -11,6 +11,9 @@ class Topic < ApplicationRecord
     decks.size
   end
 
+  # TODO: Wie viele Queries werden bei dieser Methode abgefeuert?
+  # Wie lässt sich das eventuell optimieren?
+  # Brauche ich diese Methode überhaupt? Topic hat has_many :cards
   def cards_count
     decks.sum(&:cards_count)
   end
@@ -20,6 +23,7 @@ class Topic < ApplicationRecord
   end
 
   # TODO: Im Idealfall, sollte #next_recall zurückgeben, wann die nächsten MIN_CARDS_FOR_TEST_COUNT bereit zur abfrage sind.
+  # TODO: Ich muss hier nicht über Decks gehen. Eigentlich müsste ich über #cards gehen können.
   def next_recall
     decks.map(&:next_recall).compact.min
   end

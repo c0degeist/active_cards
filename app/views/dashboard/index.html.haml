@@ -13,4 +13,5 @@
 .row-spacer
 
 %h2 Last finished tests
-= render 'tests/table', tests: @finished_tests
+.finished-tests-table
+  = render 'tests/table', tests: @finished_tests

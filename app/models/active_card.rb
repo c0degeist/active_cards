@@ -22,7 +22,7 @@ class ActiveCard < ApplicationRecord
 
   belongs_to :deck
 
-  # before_validation :set_next_recall
+  before_save :set_next_recall, if: :last_recal_changed?
 
   scope :ordered, -> { order(created_at: :desc) }
   scope :pending, -> { where("DATE(next_recall) <= ?", Date.today) }
@@ -57,10 +57,10 @@ class ActiveCard < ApplicationRecord
 
   # TODO: Das sollte vermutlich nicht hier leben.
   # Ich will vermutlich nicht, jedesmal wann ich eine ActiveRecord anfasse, auch den next_recall date berechnen.
-  # def set_next_recall
-  #   self.next_recall = if last_recal.present?
-  #     last_recal + BREAKTIME_BY_LEVEL[level]
-  #   end
-  # end
+  def set_next_recall
+    self.next_recall = if last_recal.present?
+      last_recal + BREAKTIME_BY_LEVEL[level]
+    end
+  end
 
 end

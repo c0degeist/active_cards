@@ -11,22 +11,18 @@ export default class extends Controller {
     readOnly: Boolean
   }
 
-  connect() {
-    // Den anfänglichen Wert aus dem <textarea> lesen
-    // Falls kein Data-Value gesetzt ist, nehmen wir einfach den Inhalt des Textareas
-    // NOTE: Vmtl wollen wir den Inhalt der TextArea priorisieren.
-    const initialMarkdown = this.defaultValueValue || this.element.value
+  static targets = ['textField']
 
-    this.element.style.display = "none"
-    this.editorContainer = document.createElement("div")
-    this.element.insertAdjacentElement("afterend", this.editorContainer)
+  connect() {
+    const initialMarkdown = this.defaultValueValue || this.textFieldTarget.value
+    this.textFieldTarget.style.display = "none"
 
     this.crepe = new Crepe({
       features: {
         [Crepe.Feature.BlockEdit]: false,
         [Crepe.Feature.Toolbar]: false,
       },
-      root: this.editorContainer,
+      root: this.element,
       defaultValue: initialMarkdown
       // optional: weitere Optionen
     })
@@ -39,7 +35,7 @@ export default class extends Controller {
 
     this.crepe.on(listener => {
       listener.markdownUpdated(newValue => {
-        this.element.value = this.crepe.getMarkdown()
+        this.textFieldTarget.value = this.crepe.getMarkdown()
       })
     })
   }

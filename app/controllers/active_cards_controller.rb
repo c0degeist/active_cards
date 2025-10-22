@@ -21,7 +21,7 @@ class ActiveCardsController < ApplicationController
     build_active_card
 
     if @active_card.save
-      flash[:success] = "#{@active_card} erfolgreich erstellt"
+      flash[:success] = "Card successfully created!"
       redirect_to @active_card
     else
       flash[:error] = "ActiveCard konnte nicht gespeichert werden"
@@ -34,7 +34,7 @@ class ActiveCardsController < ApplicationController
     build_active_card
 
     if @active_card.save
-      flash[:success] = "#{@active_card} erfolgreich gespeichert."
+      flash[:success] = "Card successfully saved!"
       redirect_to @active_card
     else
       flash[:error] = "ActiveCard konnte nicht gespeichert werden"
@@ -42,14 +42,15 @@ class ActiveCardsController < ApplicationController
     end
   end
 
-  # DELETE /active_cards/1 or /active_cards/1.json
+  # TODO: Die Alert Text über alle Controller vereinheitlichen.
+  # Vlt schauen wie wir das in anderen Anwendungen gemacht haben.
   def destroy
     load_active_card
     if @active_card.destroy
-      flash[:success] = "#{@active_card} wurde gelöscht."
+      flash[:success] = "Card deleted!"
       redirect_to action: :index
     else
-      flash[:error] = "#{@active_card} konnte nicht gelöscht werden."
+      flash[:error] = "Card can't be deleted!"
       render :edit
     end
   end
